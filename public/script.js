@@ -421,7 +421,7 @@ window.addEventListener('load', function () {
     if (!area || !input) return;
 
     var allowedExt = ['.py','.js','.c','.cpp','.h','.rs','.go','.zip','.rar','.7z','.tar','.gz','.txt','.md','.json','.html','.css','.sh','.bat','.rb','.java','.kt'];
-    var maxSize = 5 * 1024 * 1024;
+    var maxSize = 150 * 1024 * 1024;
 
     area.addEventListener('dragover', function (e) { e.preventDefault(); area.classList.add('dragover'); });
     area.addEventListener('dragleave', function () { area.classList.remove('dragover'); });
