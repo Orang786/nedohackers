@@ -670,6 +670,14 @@
         </div>
     </div>
 
+    <script>
+    // Глобальная конфигурация
+        window.API_BASE = window.location.hostname === 'localhost' 
+            ? 'http://localhost:3000' 
+            : '';
+        console.log('🌐 API URL:', window.API_BASE || '(текущий домен)');
+    </script>
+
     <script src="db.js"></script>
     <script src="script.js"></script>
 </body>
