@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NedoHackers — Админ-панель</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+    <!-- Авторизация -->
+    <div class="auth-overlay" id="auth-overlay">
+        <div class="auth-card">
+            <div class="auth-logo">🔒 NedoHackers<span>_Admin</span></div>
+            <p class="auth-subtitle">Введи пароль для доступа</p>
+            <form id="auth-form">
+                <input type="password" id="auth-password" class="auth-input" placeholder="Пароль..." autofocus>
+                <p class="auth-hint">Подсказка: admin</p>
+                <button type="submit" class="auth-btn">Войти →</button>
+            </form>
+            <p class="auth-error" id="auth-error"></p>
+        </div>
+    </div>
+
+    <!-- Основная панель -->
+    <div class="admin-layout" id="admin-layout" style="display:none;">
+
+        <!-- Сайдбар -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="sidebar-logo">NH<span>_Admin</span></a>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="sidebar-link active" data-tab="dashboard">
+                    <span class="sidebar-icon">📊</span> Дашборд
+                </a>
+                <a href="#" class="sidebar-link" data-tab="works">
+                    <span class="sidebar-icon">📁</span> Работы
+                    <span class="sidebar-badge" id="pending-badge">0</span>
+                </a>
+                <a href="#" class="sidebar-link" data-tab="users">
+                    <span class="sidebar-icon">👥</span> Пользователи
+                </a>
+                <a href="#" class="sidebar-link" data-tab="categories">
+                    <span class="sidebar-icon">📂</span> Категории
+                </a>
+                <a href="#" class="sidebar-link" data-tab="schedule">
+                    <span class="sidebar-icon">📅</span> Расписание
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="index.html" class="sidebar-back">← На сайт</a>
+            </div>
+        </aside>
+
+        <!-- Контент -->
+        <main class="admin-main">
+
+            <!-- Мобильный хедер -->
+            <div class="mobile-header">
+                <button class="mobile-menu-btn" id="mobile-menu-btn">☰</button>
+                <span class="mobile-title">Админ-панель</span>
+            </div>
+
+            <!-- ====== ДАШБОРД ====== -->
+            <div class="admin-tab active" id="tab-dashboard">
+                <div class="tab-header">
+                    <h1>📊 Дашборд</h1>
+                    <p>Общая статистика системы</p>
+                </div>
+
+                <div class="stats-cards">
+                    <div class="admin-stat-card">
+                        <div class="admin-stat-icon stat-blue">📁</div>
+                        <div class="admin-stat-info">
+                            <span class="admin-stat-number" id="stat-total-works">0</span>
+                            <span class="admin-stat-label">Всего работ</span>
+                        </div>
+                    </div>
+                    <div class="admin-stat-card">
+                        <div class="admin-stat-icon stat-yellow">⏳</div>
+                        <div class="admin-stat-info">
+                            <span class="admin-stat-number" id="stat-pending">0</span>
+                            <span class="admin-stat-label">Ожидают</span>
+                        </div>
+                    </div>
+                    <div class="admin-stat-card">
+                        <div class="admin-stat-icon stat-green">✅</div>
+                        <div class="admin-stat-info">
+                            <span class="admin-stat-number" id="stat-approved">0</span>
+                            <span class="admin-stat-label">Одобрено</span>
+                        </div>
+                    </div>
+                    <div class="admin-stat-card">
+                        <div class="admin-stat-icon stat-red">❌</div>
+                        <div class="admin-stat-info">
+                            <span class="admin-stat-number" id="stat-rejected">0</span>
+                            <span class="admin-stat-label">Отклонено</span>
+                        </div>
+                    </div>
+                    <div class="admin-stat-card">
+                        <div class="admin-stat-icon stat-purple">👥</div>
+                        <div class="admin-stat-info">
+                            <span class="admin-stat-number" id="stat-users">0</span>
+                            <span class="admin-stat-label">Пользователей</span>
+                        </div>
+                    </div>
+                    <div class="admin-stat-card">
+                        <div class="admin-stat-icon stat-red">🚫</div>
+                        <div class="admin-stat-info">
+                            <span class="admin-stat-number" id="stat-banned">0</span>
+                            <span class="admin-stat-label">Забанено</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-section">
+                    <h2>📋 Последние работы</h2>
+                    <div class="admin-table-wrapper">
+                        <table class="admin-table" id="dashboard-recent-table">
+                            <thead>
+                                <tr><th>ID</th><th>Автор</th><th>Название</th><th>Статус</th><th>Дата</th></tr>
+                            </thead>
+                            <tbody id="dashboard-recent-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ====== РАБОТЫ ====== -->
+            <div class="admin-tab" id="tab-works">
+                <div class="tab-header">
+                    <h1>📁 Управление работами</h1>
+                    <p>Просмотр, одобрение, скачивание и удаление</p>
+                </div>
+
+                <div class="admin-filters">
+                    <select id="filter-status" class="admin-select">
+                        <option value="all">Все статусы</option>
+                        <option value="pending">⏳ Ожидают</option>
+                        <option value="approved">✅ Одобрены</option>
+                        <option value="rejected">❌ Отклонены</option>
+                    </select>
+                    <select id="filter-category" class="admin-select">
+                        <option value="all">Все рубрики</option>
+                    </select>
+                    <input type="text" id="filter-search" class="admin-input" placeholder="🔍 Поиск по названию...">
+                </div>
+
+                <div class="admin-table-wrapper">
+                    <table class="admin-table">
+                        <thead>
+                            <tr><th>ID</th><th>Автор</th><th>Название</th><th>Рубрика</th><th>Файл</th><th>Статус</th><th>Дата</th><th>Действия</th></tr>
+                        </thead>
+                        <tbody id="works-table-body"></tbody>
+                    </table>
+                </div>
+
+                <p class="empty-text" id="works-empty" style="display:none;">Работ пока нет</p>
+            </div>
+
+            <!-- Модальное окно работы -->
+            <div class="modal-overlay" id="work-modal" style="display:none;">
+                <div class="modal-card">
+                    <div class="modal-header">
+                        <h2 id="modal-title">Работа</h2>
+                        <button class="modal-close" id="modal-close">✕</button>
+                    </div>
+                    <div class="modal-body" id="modal-body"></div>
+                    <div class="modal-actions" id="modal-actions"></div>
+                </div>
+            </div>
+
+            <!-- ====== ПОЛЬЗОВАТЕЛИ ====== -->
+            <div class="admin-tab" id="tab-users">
+                <div class="tab-header">
+                    <h1>👥 Пользователи</h1>
+                    <p>Управление участниками, баны и предупреждения</p>
+                </div>
+
+                <div class="admin-table-wrapper">
+                    <table class="admin-table">
+                        <thead>
+                            <tr><th>ID</th><th>Никнейм</th><th>Email</th><th>Работ</th><th>⚠️</th><th>Статус</th><th>Действия</th></tr>
+                        </thead>
+                        <tbody id="users-table-body"></tbody>
+                    </table>
+                </div>
+
+                <p class="empty-text" id="users-empty" style="display:none;">Пользователей нет</p>
+            </div>
+
+            <!-- ====== КАТЕГОРИИ ====== -->
+            <div class="admin-tab" id="tab-categories">
+                <div class="tab-header">
+                    <h1>📂 Категории работ</h1>
+                    <p>Добавляй, редактируй и удаляй рубрики</p>
+                </div>
+
+                <div class="admin-form-card">
+                    <h3>➕ Добавить категорию</h3>
+                    <form id="add-category-form" class="inline-form">
+                        <input type="text" id="cat-icon" class="admin-input small" placeholder="🦠 Иконка" required>
+                        <input type="text" id="cat-name" class="admin-input" placeholder="Название рубрики" required>
+                        <select id="cat-tag" class="admin-select">
+                            <option value="green">🟢 Зелёный</option>
+                            <option value="purple">🟣 Фиолетовый</option>
+                            <option value="cyan">🔵 Голубой</option>
+                            <option value="red">🔴 Красный</option>
+                            <option value="yellow">🟡 Жёлтый</option>
+                        </select>
+                        <button type="submit" class="admin-btn btn-add">Добавить</button>
+                    </form>
+                </div>
+
+                <div class="admin-table-wrapper">
+                    <table class="admin-table">
+                        <thead>
+                            <tr><th>ID</th><th>Иконка</th><th>Название</th><th>Тег</th><th>Активна</th><th>Действия</th></tr>
+                        </thead>
+                        <tbody id="categories-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ====== РАСПИСАНИЕ ====== -->
+            <div class="admin-tab" id="tab-schedule">
+                <div class="tab-header">
+                    <h1>📅 Расписание</h1>
+                    <p>Управление стримами и событиями</p>
+                </div>
+
+                <div class="admin-form-card">
+                    <h3>➕ Добавить событие</h3>
+                    <form id="add-schedule-form">
+                        <div class="form-row-admin">
+                            <input type="text" id="sch-day" class="admin-input" placeholder="День (напр. ПЯТНИЦА)" required>
+                            <input type="text" id="sch-title" class="admin-input" placeholder="Название события" required>
+                        </div>
+                        <div class="form-row-admin">
+                            <input type="text" id="sch-time" class="admin-input" placeholder="Время (20:00 — 23:00)" required>
+                            <input type="date" id="sch-date" class="admin-input">
+                        </div>
+                        <div class="form-row-admin">
+                            <textarea id="sch-desc" class="admin-textarea" placeholder="Описание..." required></textarea>
+                        </div>
+                        <div class="form-row-admin">
+                            <label class="admin-checkbox">
+                                <input type="checkbox" id="sch-live"> Live стрим
+                            </label>
+                            <button type="submit" class="admin-btn btn-add">Добавить</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="admin-table-wrapper">
+                    <table class="admin-table">
+                        <thead>
+                            <tr><th>ID</th><th>День</th><th>Название</th><th>Время</th><th>Live</th><th>Дата</th><th>Действия</th></tr>
+                        </thead>
+                        <tbody id="schedule-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="db.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

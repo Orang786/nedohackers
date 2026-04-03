@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NedoHackers — Отправь свою работу</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Прелоадер -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-content">
+            <div class="preloader-logo">NedoHackers_</div>
+            <div class="preloader-bar"><div class="preloader-fill"></div></div>
+            <div class="preloader-text">Загрузка системы...</div>
+        </div>
+    </div>
+
+    <canvas id="matrix-canvas"></canvas>
+    <div class="scroll-progress" id="scroll-progress"></div>
+    <div class="custom-cursor" id="custom-cursor"></div>
+    <div class="custom-cursor-dot" id="custom-cursor-dot"></div>
+
+    <!-- Блог / Новости -->
+    <section class="section blog-section" id="blog">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">// Блог</span>
+                <h2 class="section-title">Новости и статьи</h2>
+            </div>
+            <div class="blog-grid">
+                <article class="blog-card">
+                    <div class="blog-card-image">📰</div>
+                    <div class="blog-card-body">
+                        <span class="blog-tag">Новости</span>
+                        <h3>Открыт приём работ на Июль 2025</h3>
+                        <p>Призовой фонд увеличен до 50,000 ₽. Новые рубрики и бонусы.</p>
+                        <div class="blog-meta">
+                            <span>📅 1 июля 2025</span>
+                            <span>👁 324 просмотра</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="blog-card">
+                    <div class="blog-card-image">🔐</div>
+                    <div class="blog-card-body">
+                        <span class="blog-tag">Туториал</span>
+                        <h3>Как написать свой первый кейлоггер на Python</h3>
+                        <p>Пошаговое руководство для образовательных целей с объяснением каждой строки.</p>
+                        <div class="blog-meta">
+                            <span>📅 28 июня 2025</span>
+                            <span>👁 1,247 просмотров</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="blog-card">
+                    <div class="blog-card-image">🏆</div>
+                    <div class="blog-card-body">
+                        <span class="blog-tag">Результаты</span>
+                        <h3>Итоги конкурса Июнь 2025</h3>
+                        <p>D4rk_C0d3r занял первое место с полиморфным шифровальщиком.</p>
+                        <div class="blog-meta">
+                            <span>📅 25 июня 2025</span>
+                            <span>👁 892 просмотра</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <div class="top-banner">
+        <span>🔥 Открыт приём работ на <strong>Июль 2025</strong> — призовой фонд <strong>50 000 ₽</strong>
+        &nbsp;|&nbsp; <a href="admin.html" style="color:#000;text-decoration:underline;">🔧 Админ-панель</a></span>
+    </div>
+
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Уведомления (колокольчик) -->
+    <div class="notif-bell" id="notif-bell">
+        🔔
+        <span class="notif-badge" id="notif-badge">0</span>
+    </div>
+    <div class="notif-panel" id="notif-panel">
+        <div class="notif-panel-header">
+            <span>🔔 Уведомления</span>
+            <button class="notif-clear" id="notif-clear">Очистить</button>
+        </div>
+        <div class="notif-list" id="notif-list"></div>
+    </div>
+
+    <!-- Глобальный поиск -->
+    <div class="search-overlay" id="search-overlay">
+        <div class="search-modal">
+            <div class="search-header">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="search-input" class="search-input" placeholder="Поиск по сайту..." autofocus>
+                <span class="search-close" id="search-close">Esc</span>
+            </div>
+            <div class="search-results" id="search-results"></div>
+        </div>
+    </div>
+
+    <!-- Changelog модалка -->
+    <div class="changelog-overlay" id="changelog-overlay" style="display:none;">
+        <div class="changelog-modal">
+            <div class="changelog-header">
+                <h2>🚀 Что нового в v3.0</h2>
+                <button class="changelog-close" id="changelog-close">✕</button>
+            </div>
+            <div class="changelog-body">
+                <div class="changelog-version">
+                    <span class="changelog-tag">v3.0</span>
+                    <span class="changelog-date">Июль 2025</span>
+                </div>
+                <ul class="changelog-list">
+                    <li class="cl-new">🆕 Загрузка файлов с Drag & Drop</li>
+                    <li class="cl-new">🆕 Реальный календарь событий</li>
+                    <li class="cl-new">🆕 Админ-панель с управлением</li>
+                    <li class="cl-new">🆕 Система достижений и XP</li>
+                    <li class="cl-new">🆕 Графики статистики</li>
+                    <li class="cl-new">🆕 Система уведомлений</li>
+                    <li class="cl-new">🆕 Глобальный поиск (Ctrl+/)</li>
+                    <li class="cl-new">🆕 Лайки и голосование</li>
+                    <li class="cl-new">🆕 Профиль участника</li>
+                    <li class="cl-improve">✨ 5 цветовых тем</li>
+                    <li class="cl-improve">✨ Интерактивный терминал</li>
+                    <li class="cl-fix">🐛 Оптимизация производительности</li>
+                </ul>
+            </div>
+            <div class="changelog-footer">
+                <button class="changelog-btn" id="changelog-ok">Круто! Поехали →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cookie баннер -->
+    <div class="cookie-banner" id="cookie-banner" style="display:none;">
+        <div class="cookie-content">
+            <span class="cookie-icon">🍪</span>
+            <p>Мы используем cookies и localStorage для хранения данных. Продолжая использовать сайт, ты соглашаешься с этим.</p>
+            <div class="cookie-buttons">
+                <button class="cookie-accept" id="cookie-accept">Принять</button>
+                <button class="cookie-decline" id="cookie-decline">Только необходимые</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Онбординг -->
+    <div class="onboarding-overlay" id="onboarding-overlay" style="display:none;">
+        <div class="onboarding-tooltip" id="onboarding-tooltip">
+            <div class="onboarding-step" id="onboarding-step">Шаг 1 из 5</div>
+            <h3 id="onboarding-title">Добро пожаловать!</h3>
+            <p id="onboarding-text">Это NedoHackers — платформа для отправки работ по кибербезопасности.</p>
+            <div class="onboarding-buttons">
+                <button class="onboarding-skip" id="onboarding-skip">Пропустить</button>
+                <button class="onboarding-next" id="onboarding-next">Далее →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Таймер активности -->
+    <div class="activity-timer" id="activity-timer">⏱ 00:00</div>
+
+    <!-- Музыка -->
+    <div class="music-toggle" id="music-toggle" title="Фоновая музыка">🔇</div>
+
+    <!-- Streak -->
+    <div class="streak-popup" id="streak-popup" style="display:none;">
+        <span class="streak-fire">🔥</span>
+        <span class="streak-count" id="streak-count">1</span>
+        <span class="streak-text">день подряд!</span>
+    </div>
+
+    <!-- НАВИГАЦИЯ -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">Nedo<span>Hackers</span>_</a>
+            <input type="checkbox" id="nav-toggle" class="nav-toggle">
+            <label for="nav-toggle" class="nav-toggle-label"><span></span><span></span><span></span></label>
+            <ul class="nav-links">
+                <li><a href="#home">Главная</a></li>
+                <li><a href="#categories">Рубрики</a></li>
+                <li><a href="#how-it-works">Инструкция</a></li>
+                <li><a href="#calendar">Календарь</a></li>
+                <li><a href="#schedule">Расписание</a></li>
+                <li><a href="#submit">Отправить</a></li>
+                <li><a href="#hall-of-fame">Топ</a></li>
+                <li><a href="#links">Ссылки</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+        <div class="hero-decor hero-decor-1"></div>
+        <div class="hero-decor hero-decor-2"></div>
+        <div class="hero-decor hero-decor-3"></div>
+        <div class="hero-content">
+            <span class="hero-badge">🛡️ v3.0 — Сезон охоты открыт</span>
+            <h1>Добро пожаловать в<br><span class="highlight-green">Nedo</span><span class="highlight-purple">Hackers</span></h1>
+            <p class="typing-text">$ Отправляй свои работы → Получай награду_</p>
+            <div class="hero-buttons">
+                <a href="#submit" class="btn btn-primary">🚀 Отправить работу</a>
+                <a href="#categories" class="btn btn-secondary">📂 Смотреть рубрики</a>
+            </div>
+            <!-- Живая статистика из БД -->
+            <div class="stats-row">
+                <div class="stat-item">
+                    <span class="stat-number" id="live-works">0</span>
+                    <span class="stat-label">Работ отправлено</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="live-users">0</span>
+                    <span class="stat-label">Участников</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="live-approved">0</span>
+                    <span class="stat-label">Одобрено</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">24/7</span>
+                    <span class="stat-label">Поддержка</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- РУБРИКИ (динамические из БД) -->
+    <section class="section" id="categories">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">// Категории</span>
+                <h2 class="section-title">В какие рубрики можно попасть?</h2>
+                <p class="section-subtitle">Выбери направление и отправь свою лучшую работу</p>
+            </div>
+            <div class="categories-grid" id="categories-grid">
+                <!-- Заполняется из JS -->
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- КАК ЭТО РАБОТАЕТ -->
+    <section class="section steps-section" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">// Инструкция</span>
+                <h2 class="section-title">Как это работает?</h2>
+                <p class="section-subtitle">Всего 4 шага от отправки до награды</p>
+            </div>
+            <div class="steps-timeline">
+                <div class="step-item">
+                    <div class="step-number">01</div>
+                    <div class="step-line"></div>
+                    <div class="step-content"><div class="step-icon">💻</div><h3>Создай проект</h3><p>Напиши свой инструмент или программу</p></div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">02</div>
+                    <div class="step-line"></div>
+                    <div class="step-content"><div class="step-icon">📤</div><h3>Отправь работу</h3><p>Заполни форму и прикрепи файл</p></div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">03</div>
+                    <div class="step-line"></div>
+                    <div class="step-content"><div class="step-icon">🔍</div><h3>Мы оценим</h3><p>Команда протестирует и оценит</p></div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">04</div>
+                    <div class="step-line"></div>
+                    <div class="step-content"><div class="step-icon">🏆</div><h3>Получи награду</h3><p>Лучшие получают призы!</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- КАЛЕНДАРЬ -->
+    <section class="section calendar-section" id="calendar">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">// Календарь</span>
+                <h2 class="section-title">Расписание событий</h2>
+                <p class="section-subtitle">Все стримы, дедлайны и события в одном месте</p>
+            </div>
+            <div class="calendar-wrapper">
+                <div class="calendar-nav">
+                    <button class="calendar-btn" id="cal-prev">◀</button>
+                    <h3 class="calendar-month" id="cal-month">Июль 2025</h3>
+                    <button class="calendar-btn" id="cal-next">▶</button>
+                </div>
+                <div class="calendar-grid">
+                    <div class="calendar-day-header">Пн</div>
+                    <div class="calendar-day-header">Вт</div>
+                    <div class="calendar-day-header">Ср</div>
+                    <div class="calendar-day-header">Чт</div>
+                    <div class="calendar-day-header">Пт</div>
+                    <div class="calendar-day-header">Сб</div>
+                    <div class="calendar-day-header">Вс</div>
+                </div>
+                <div class="calendar-days" id="cal-days">
+                    <!-- Заполняется из JS -->
+                </div>
+                <div class="calendar-legend">
+                    <span class="legend-item"><span class="legend-dot dot-work"></span> Работы</span>
+                    <span class="legend-item"><span class="legend-dot dot-stream"></span> Стримы</span>
+                    <span class="legend-item"><span class="legend-dot dot-today"></span> Сегодня</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- РАСПИСАНИЕ (динамическое из БД) -->
+    <section class="section schedule-section" id="schedule">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">// Расписание</span>
+                <h2 class="section-title">Стримы и видео</h2>
+                <p class="section-subtitle">Следи за расписанием и не пропускай разборы</p>
+            </div>
+            <div class="schedule-grid" id="schedule-grid">
+                <!-- Заполняется из JS -->
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ОБРАТНЫЙ ОТСЧЁТ -->
+    <section class="section countdown-section" id="countdown">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">// Скоро в эфире</span>
+                <h2 class="section-title">До следующего стрима</h2>
+            </div>
+            <div class="countdown-timer">
+                <div class="countdown-item"><span class="countdown-number" id="cd-days">00</span><span class="countdown-label">Дней</span></div>
+                <div class="countdown-separator">:</div>
+                <div class="countdown-item"><span class="countdown-number" id="cd-hours">00</span><span class="countdown-label">Часов</span></div>
+                <div class="countdown-separator">:</div>
+                <div class="countdown-item"><span class="countdown-number" id="cd-minutes">00</span><span class="countdown-label">Минут</span></div>
+                <div class="countdown-separator">:</div>
+                <div class="countdown-item"><span class="countdown-number" id="cd-seconds">00</span><span class="countdown-label">Секунд</span></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Профиль участника -->
+    <section class="section profile-section" id="profile">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">// Мой профиль</span>
+                <h2 class="section-title">Твоя статистика</h2>
+            </div>
+            <div class="profile-card" id="profile-card">
+                <div class="profile-header-row">
+                    <div class="profile-avatar" id="profile-avatar">👤</div>
+                    <div class="profile-info">
+                        <h3 id="profile-name">Гость</h3>
+                        <p class="profile-level" id="profile-level">Уровень 1 — Новичок</p>
+                        <div class="xp-bar">
+                            <div class="xp-fill" id="xp-fill" style="width:0%"></div>
+                        </div>
+                        <span class="xp-text" id="xp-text">0 / 100 XP</span>
+                    </div>
+                    <div class="profile-streak">
+                        <span class="streak-number" id="profile-streak">0</span>
+                        <span class="streak-label">🔥 дней</span>
+                    </div>
+                </div>
+
+                <div class="profile-stats-row">
+                    <div class="profile-stat"><span class="ps-num" id="ps-works">0</span><span class="ps-label">Работ</span></div>
+                    <div class="profile-stat"><span class="ps-num" id="ps-approved">0</span><span class="ps-label">Одобрено</span></div>
+                    <div class="profile-stat"><span class="ps-num" id="ps-likes">0</span><span class="ps-label">Лайков</span></div>
+                    <div class="profile-stat"><span class="ps-num" id="ps-visits">0</span><span class="ps-label">Визитов</span></div>
+                </div>
+
+                <!-- Достижения -->
+                <div class="achievements-section">
+                    <h4>🏅 Достижения</h4>
+                    <div class="achievements-grid" id="achievements-grid"></div>
+                </div>
+
+                <!-- Мини-график -->
+                <div class="activity-chart-section">
+                    <h4>📊 Активность за 7 дней</h4>
+                    <div class="activity-chart" id="activity-chart"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ОТПРАВКА РАБОТЫ + ЗАГРУЗКА ФАЙЛОВ -->
+    <section class="section submit-section" id="submit">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">// Отправить работу</span>
+                <h2 class="section-title">Покажи, на что способен</h2>
+                <p class="section-subtitle">Заполни форму и прикрепи файл. Лучшие будут награждены!</p>
+            </div>
+            <div class="submit-form">
+                <form id="submit-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nickname">👤 Никнейм</label>
+                            <input type="text" id="nickname" placeholder="h4ck3r_01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">📧 Email</label>
+                            <input type="email" id="email" placeholder="your@email.com" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="category">📂 Рубрика</label>
+                            <select id="category" required>
+                                <option value="" disabled selected>Выбери рубрику...</option>
+                                <!-- Заполняется из JS -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="work-title">📌 Название</label>
+                            <input type="text" id="work-title" placeholder="Название проекта" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">📝 Описание</label>
+                        <textarea id="description" placeholder="Расскажи о своей работе..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="link">🔗 Ссылка (GitHub, и т.д.)</label>
+                        <input type="url" id="link" placeholder="https://github.com/...">
+                    </div>
+
+                    <!-- ЗАГРУЗКА ФАЙЛА -->
+                    <div class="form-group">
+                        <label>📎 Прикрепить файл</label>
+                        <div class="file-upload-area" id="file-upload-area">
+                            <input type="file" id="file-input" class="file-input-hidden" accept=".py,.js,.c,.cpp,.rs,.go,.zip,.rar,.7z,.tar,.gz,.txt,.md">
+                            <div class="file-upload-content" id="file-upload-content">
+                                <span class="file-upload-icon">📁</span>
+                                <p class="file-upload-text">Перетащи файл сюда или <span class="file-upload-link">нажми для выбора</span></p>
+                                <p class="file-upload-hint">.py, .js, .c, .cpp, .zip, .rar — до 5 МБ</p>
+                            </div>
+                            <div class="file-upload-preview" id="file-upload-preview" style="display:none;">
+                                <span class="file-preview-icon">📄</span>
+                                <div class="file-preview-info">
+                                    <span class="file-preview-name" id="file-name">file.py</span>
+                                    <span class="file-preview-size" id="file-size">12.3 KB</span>
+                                </div>
+                                <button type="button" class="file-remove-btn" id="file-remove">✕</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="form-submit-btn">🚀 Отправить на рассмотрение</button>
+                </form>
+            </div>
+
+            <!-- Последние работы -->
+            <div class="recent-works" id="recent-works">
+                <h3 class="recent-title">📋 Последние отправленные работы</h3>
+                <div class="recent-list" id="recent-list">
+                    <!-- Заполняется из JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ЗАЛ СЛАВЫ -->
+    <section class="section hall-section" id="hall-of-fame">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">// Hall of Fame</span>
+                <h2 class="section-title">Зал славы</h2>
+                <p class="section-subtitle">Лучшие из лучших</p>
+            </div>
+            <div class="podium">
+                <div class="podium-card silver">
+                    <div class="podium-rank">2</div><div class="podium-avatar">🥈</div>
+                    <h3>Sh4d0w_X</h3><p class="podium-work">Сетевой сниффер</p>
+                    <span class="podium-prize silver-prize">5 000 ₽</span>
+                </div>
+                <div class="podium-card gold">
+                    <div class="podium-crown">👑</div><div class="podium-rank">1</div><div class="podium-avatar">🥇</div>
+                    <h3>D4rk_C0d3r</h3><p class="podium-work">Полиморфный шифровальщик</p>
+                    <span class="podium-prize gold-prize">10 000 ₽</span>
+                </div>
+                <div class="podium-card bronze">
+                    <div class="podium-rank">3</div><div class="podium-avatar">🥉</div>
+                    <h3>N1ghtF0x</h3><p class="podium-work">Обход антивирусов</p>
+                    <span class="podium-prize bronze-prize">3 000 ₽</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Голосование -->
+    <section class="section voting-section" id="voting">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">// Голосование</span>
+                <h2 class="section-title">Лучшая работа месяца</h2>
+                <p class="section-subtitle">Голосуй за понравившиеся работы</p>
+            </div>
+            <div class="voting-grid" id="voting-grid"></div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Таймлайн проекта -->
+    <section class="section timeline-section" id="timeline">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">// История</span>
+                <h2 class="section-title">Таймлайн NedoHackers</h2>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">Январь 2024</span>
+                        <h3>🌱 Основание</h3>
+                        <p>Проект NedoHackers создан. Первый стрим собрал 50 зрителей.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">Май 2024</span>
+                        <h3>🚀 100 участников</h3>
+                        <p>Сообщество выросло. Запущен Discord-сервер.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">Октябрь 2024</span>
+                        <h3>🏆 Первый конкурс</h3>
+                        <p>Проведён первый конкурс с призовым фондом 10,000 ₽.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">Март 2025</span>
+                        <h3>💻 Запуск сайта v2.0</h3>
+                        <p>Полностью обновлённый сайт с формой отправки работ.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">Июль 2025</span>
+                        <h3>⚡ Версия 3.0</h3>
+                        <p>Админ-панель, загрузка файлов, достижения, голосование и многое другое!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ССЫЛКИ -->
+    <section class="section" id="links">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">// Ссылки</span>
+                <h2 class="section-title">Все важные ссылки</h2>
+            </div>
+            <div class="links-grid">
+                <a href="#" class="link-card"><span class="link-icon">📺</span><div class="link-info"><h3>YouTube</h3><p>Видео и стримы</p></div><span class="link-arrow">→</span></a>
+                <a href="#" class="link-card"><span class="link-icon">💬</span><div class="link-info"><h3>Telegram</h3><p>Новости</p></div><span class="link-arrow">→</span></a>
+                <a href="#" class="link-card"><span class="link-icon">🎮</span><div class="link-info"><h3>Discord</h3><p>Чат сообщества</p></div><span class="link-arrow">→</span></a>
+                <a href="#" class="link-card"><span class="link-icon">🐙</span><div class="link-info"><h3>GitHub</h3><p>Исходники</p></div><span class="link-arrow">→</span></a>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- FAQ -->
+    <section class="section faq-section" id="faq">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">// F.A.Q.</span>
+                <h2 class="section-title">Часто задаваемые вопросы</h2>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item"><details><summary>Как отправить свою работу?</summary><div class="faq-answer">Перейди в раздел «Отправить работу», заполни форму и прикрепи файл проекта. Мы рассмотрим в течение 3–5 дней.</div></details></div>
+                <div class="faq-item"><details><summary>Какие награды можно получить?</summary><div class="faq-answer">1 место — 10,000 ₽, 2 место — 5,000 ₽, 3 место — 3,000 ₽ + роли в Discord.</div></details></div>
+                <div class="faq-item"><details><summary>Какие файлы можно загружать?</summary><div class="faq-answer">Исходный код (.py, .js, .c, .cpp, .rs, .go) или архивы (.zip, .rar, .7z). Максимальный размер — 5 МБ.</div></details></div>
+                <div class="faq-item"><details><summary>Это легально?</summary><div class="faq-answer">Все работы принимаются в образовательных целях. Тестирование только в изолированных средах.</div></details></div>
+                <div class="faq-item"><details><summary>Могу ли я отправить командный проект?</summary><div class="faq-answer">Да! Укажи всех участников в описании.</div></details></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Бегущая строка -->
+    <div class="marquee-wrapper">
+        <div class="marquee">
+            <span>🦠 НОВЫЕ РАБОТЫ КАЖДЫЙ ДЕНЬ</span><span>🔓 БОЛЕЕ 1000 ПРОЕКТОВ</span><span>🏆 ПРИЗОВОЙ ФОНД 50 000 ₽</span><span>💀 ТОЛЬКО ЭТИЧНЫЙ ХАКИНГ</span><span>🎮 DISCORD</span><span>📺 СТРИМЫ</span>
+            <span>🦠 НОВЫЕ РАБОТЫ КАЖДЫЙ ДЕНЬ</span><span>🔓 БОЛЕЕ 1000 ПРОЕКТОВ</span><span>🏆 ПРИЗОВОЙ ФОНД 50 000 ₽</span><span>💀 ТОЛЬКО ЭТИЧНЫЙ ХАКИНГ</span><span>🎮 DISCORD</span><span>📺 СТРИМЫ</span>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand"><h3>NedoHackers_</h3><p>Сообщество энтузиастов кибербезопасности.</p></div>
+            <div class="footer-links"><h4>Навигация</h4><ul><li><a href="#home">Главная</a></li><li><a href="#categories">Рубрики</a></li><li><a href="#schedule">Расписание</a></li><li><a href="#submit">Отправить</a></li><li><a href="#faq">FAQ</a></li></ul></div>
+            <div class="footer-links"><h4>Ресурсы</h4><ul><li><a href="#">Правила</a></li><li><a href="admin.html">Админ-панель</a></li><li><a href="#hall-of-fame">Зал славы</a></li></ul></div>
+            <div class="footer-links"><h4>Контакты</h4><ul><li><a href="#">📧 admin@nedohackers.site</a></li><li><a href="#">💬 @nedohackers</a></li></ul></div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 NedoHackers. Все права защищены.</p>
+            <div class="footer-socials"><a href="#">▶</a><a href="#">✈</a><a href="#">🎮</a><a href="#">⌨</a></div>
+        </div>
+    </footer>
+
+    <a href="#home" class="scroll-top" id="scroll-top" title="Наверх">↑</a>
+
+    <!-- Переключатель тем -->
+    <div class="theme-switcher">
+        <div class="theme-switcher-label" id="theme-label">🎨</div>
+        <div class="theme-options" id="theme-options">
+            <button class="theme-btn active" data-theme="green"><span style="background:#00ff41;"></span></button>
+            <button class="theme-btn" data-theme="purple"><span style="background:#a855f7;"></span></button>
+            <button class="theme-btn" data-theme="cyan"><span style="background:#00d4ff;"></span></button>
+            <button class="theme-btn" data-theme="red"><span style="background:#ff3e3e;"></span></button>
+            <button class="theme-btn" data-theme="gold"><span style="background:#ffd700;"></span></button>
+        </div>
+    </div>
+
+    <!-- Терминал -->
+    <div class="terminal-toggle" id="terminal-toggle">⌨</div>
+    <div class="terminal-window" id="terminal-window">
+        <div class="terminal-header">
+            <div class="terminal-dots"><span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span></div>
+            <span class="terminal-title">nedohackers@terminal:~$</span>
+            <span class="terminal-close" id="terminal-close">✕</span>
+        </div>
+        <div class="terminal-body" id="terminal-body">
+            <div class="terminal-line"><span class="terminal-output"> Введи <span style="color:var(--green);">help</span> для списка команд</span></div>
+        </div>
+        <div class="terminal-input-line">
+            <span class="terminal-prompt">visitor@nh:~$</span>
+            <input type="text" class="terminal-input" id="terminal-input" placeholder="Введи команду..." autocomplete="off" spellcheck="false">
+        </div>
+    </div>
+
+    <script src="db.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
