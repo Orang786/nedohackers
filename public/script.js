@@ -51,8 +51,9 @@ var API = (function () {
         });
     }
 
-    // ---------- public API ----------
+        // ---------- public API ----------
     return {
+        // Базовые методы
         getVisitorId: getVisitorId,
 
         // Статистика
@@ -71,7 +72,7 @@ var API = (function () {
             return request('GET', '/api/schedule');
         },
 
-        // Работы  (params: { limit, status, search })
+        // Работы (params: { limit, status, search })
         getWorks: function (params) {
             params = params || {};
             var parts = [];
@@ -119,6 +120,83 @@ var API = (function () {
 
         clearNotifications: function () {
             return request('DELETE', '/api/notifications');
+        },
+
+        // ========== АДМИН-МЕТОДЫ ==========
+        
+        // Авторизация админа
+        adminLogin: function(password) {
+            return request('POST', '/api/admin/login', { password: password });
+        },
+
+        // Получить всех пользователей (админ)
+        getUsers: function() {
+            return request('GET', '/api/admin/users');
+        },
+
+        // Выдать предупреждение пользователю
+        warnUser: function(userId) {
+            return request('POST', '/api/admin/users/' + userId + '/warn');
+        },
+
+        // Забанить пользователя
+        banUser: function(userId) {
+            return request('POST', '/api/admin/users/' + userId + '/ban');
+        },
+
+        // Разбанить пользователя
+        unbanUser: function(userId) {
+            return request('POST', '/api/admin/users/' + userId + '/unban');
+        },
+
+        // Получить одну работу по ID
+        getWork: function(workId) {
+            return request('GET', '/api/works/' + workId);
+        },
+
+        // Обновить статус работы
+        updateWork: function(workId, data) {
+            return request('PUT', '/api/works/' + workId, data);
+        },
+
+        // Скачать файл работы (URL)
+        downloadWorkUrl: function(workId) {
+            return BASE + '/api/works/' + workId + '/download';
+        },
+
+        // Получить категории (все, включая неактивные для админа)
+        getAllCategories: function() {
+            return request('GET', '/api/categories');
+        },
+
+        // Добавить категорию
+        addCategory: function(data) {
+            return request('POST', '/api/categories', data);
+        },
+
+        // Обновить категорию
+        updateCategory: function(categoryId, data) {
+            return request('PUT', '/api/categories/' + categoryId, data);
+        },
+
+        // Удалить категорию
+        deleteCategory: function(categoryId) {
+            return request('DELETE', '/api/categories/' + categoryId);
+        },
+
+        // Добавить событие в расписание
+        addScheduleItem: function(data) {
+            return request('POST', '/api/schedule', data);
+        },
+
+        // Удалить событие из расписания
+        deleteScheduleItem: function(itemId) {
+            return request('DELETE', '/api/schedule/' + itemId);
+        },
+
+        // Экспорт всех данных
+        exportAll: function() {
+            return request('GET', '/api/admin/export');
         }
     };
 })();
